@@ -47,17 +47,13 @@ public class PacmanProyect {
     }
     
     public static void MostrarHistorial (){
-        if (listado.size() == 0) {
-            System.out.println("    Nombre         |    Puntaje ");
-            System.out.println(" ! No hay partidas registradas ");
+        System.out.println("    Nombre         |    Puntaje ");
             for (int i = (listado.size()-1); i >= 0; i--) { 
             System.out.println("-> "+ listado.get(i).nombre + "          -> "+ listado.get(i).puntaje);
-        }
         }
     }
     
     public static String scp(){
-        leer.nextLine();
         return leer.nextLine();
     }
     
@@ -74,7 +70,7 @@ public class PacmanProyect {
     }
     
     public static int sc (){
-        return leer.nextInt();
+        return Integer.parseInt(leer.nextLine());
     }
 
     public static int CrearTablero(int lenght){
@@ -199,6 +195,9 @@ public class PacmanProyect {
     }
     
     public static int MenuMovimientoPacman(){
+        System.out.println(" NOMBRE - "+ nombreUsuario);
+        System.out.println(" PUNTAJE - "+ Puntaje);
+        System.out.println(" VIDAS - "+ VidasPacman);
         System.out.println(" ");
         System.out.println(" --- Menu Movimiento pacman --- ");
         System.out.println("1. Arriba ");
@@ -246,7 +245,7 @@ public class PacmanProyect {
             }
             case 6->{// salir
                 System.out.println(" Hasta la proxima ");
-                transcursoPartida();
+                return -1;
             }
             default->{
                 System.out.println("");
@@ -256,8 +255,7 @@ public class PacmanProyect {
         }
         if (CantidadObjetos ==0){
             System.out.println(" Felicidades has ganado !!! ");
-            GuardarPartida(nombreUsuario,Puntaje);
-            transcursoPartida();
+            return -1;
         }
         return 0;
     }
@@ -346,6 +344,7 @@ public class PacmanProyect {
                     System.out.println();
                     if(VidasPacman == 0){
                         System.out.println(" Te quedaste sin vidas hasta la proxima");
+                        return false; // SOLO SALIR
                     }
                     return true;
                 }
@@ -378,8 +377,10 @@ public class PacmanProyect {
         System.out.println("|3. Salir                           |");
         System.out.println("-------------------------------------");
         int opcion;
-        System.out.print(" -> " ); opcion = sc();
+        System.out.print(" -> " );
+        opcion = sc();
         return opcion;
+        
     }
     
     public static int MenuTablero(){
@@ -407,15 +408,16 @@ public class PacmanProyect {
                 ObjetosRandom(); // Asignar objetos
                 do{
                     MostrarTablero();
-                    MenuMovimientoPacman();
-                    System.out.println(" punteo -> " + Puntaje);
-                    System.out.println(" vidas -> " + VidasPacman);
-                }while (!(VidasPacman==0) && !(CantidadObjetos==0) ); 
+                    int estado = MenuMovimientoPacman();
+                    if(estado == -1) break;
+}               while (VidasPacman > 0 && CantidadObjetos > 0); 
                 // cuando se termine la partida agregar al jugador al historial
                 GuardarPartida(nombreUsuario,Puntaje);
             }
             case 2->{// HIstorial partidas
+
                 MostrarHistorial();
+                
             }
             case 3->{// salir
                 System.out.println(" Hasta la proxima "); 
