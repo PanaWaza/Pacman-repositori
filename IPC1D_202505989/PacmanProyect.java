@@ -344,6 +344,9 @@ public class PacmanProyect {
                     System.out.println();
                     System.out.println(" ! Tocaste un fantasma ");
                     System.out.println();
+                    if(VidasPacman == 0){
+                        System.out.println(" Te quedaste sin vidas hasta la proxima");
+                    }
                     return true;
                 }
                 case 2->{// premio simple 10 puntos
@@ -407,7 +410,7 @@ public class PacmanProyect {
                     MenuMovimientoPacman();
                     System.out.println(" punteo -> " + Puntaje);
                     System.out.println(" vidas -> " + VidasPacman);
-                }while (!(VidasPacman==0) || !(CantidadObjetos==0) ); 
+                }while (!(VidasPacman==0) && !(CantidadObjetos==0) ); 
                 // cuando se termine la partida agregar al jugador al historial
                 GuardarPartida(nombreUsuario,Puntaje);
             }
